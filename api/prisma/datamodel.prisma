@@ -1,0 +1,21 @@
+type Category {
+  id: ID! @id
+  name: String!
+  keywords: [Keyword!]!
+  createdAt: DateTime! @createdAt
+  count: Int!
+}
+
+type Keyword {
+  id: ID! @id
+  name: String!
+  createdAt: DateTime! @createdAt
+  category: Category @relation(link: INLINE)
+}
+
+enum CategoryOrderByInput {
+  NAME_ASC
+  NAME_DESC
+  CREATEDAT_ASC
+  CREATEDAT_DESC
+}

@@ -1,0 +1,34 @@
+
+type Query {
+  info: String!
+  categories(filter: String, skip: Int, first: Int, orderBy: CategoryOrderByInput): [Category!]
+  keywords(categoryId: ID!): [Keyword!]
+  fillKeywords(categoryName: String): [String]
+}
+
+type Category {
+  id: ID!
+  name: String!
+  keywords: [Keyword!]
+  count: Int!
+}
+
+type Keyword {
+  id: ID!
+  name: String!
+  category: Category
+}
+
+type Mutation {
+  postKeyword (name: String!, categoryId: ID!): Keyword
+  postCategory (name: String!): Category
+  removeKeyword (keywordId: ID!): Keyword
+  removeCategory (categoryId: ID!): Category
+}
+
+enum CategoryOrderByInput {
+  name_ASC
+  name_DESC
+  createdAt_ASC
+  createdAt_DESC
+}

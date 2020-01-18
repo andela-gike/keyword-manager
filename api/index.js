@@ -1,22 +1,32 @@
-const { ApolloServer, gql } = require("apollo-server");
+const { GraphQLServer } = require('graphql-yoga');
+const { prisma } = require('./generated/prisma-client');
+const Query = require('./resolvers/Query');
+const Mutation = require('./resolvers/Mutation');
+const Category = require('./resolvers/Category');
+const Keyword = require('./resolvers/Keyword');
 
-const typeDefs = gql`
-  type Query {
-    hello: String
-  }
-`;
 
+// 2
 const resolvers = {
-  Query: {
-    hello: (root, args, context) => "Hello from Searchmetrics!"
-  }
-};
+  Query,
+  Mutation,
+  Category,
+  Keyword
+}
 
-const server = new ApolloServer({
-  typeDefs,
-  resolvers
-});
+const options = {
+  port: 4001,
+}
 
-server.listen().then(({ url }) => {
-  console.log(`🚀 Server ready at ${url}`);
-});
+// 3
+const server = new GraphQLServer({
+  typeDefs: './schema.graphql',
+  resolvers,
+  context: request => {
+    return {
+      ...request,
+      prisma }
+  },
+})
+
+server.start(options, ({ port }) => console.log(`Server is running on http://localhost:${port}`))
