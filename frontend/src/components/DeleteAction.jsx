@@ -14,7 +14,6 @@ class PopupDelete extends Component {
   }
 
   handleDeleteItem = (evt, type, removeItem, itemId) => {
-    console.log(itemId)
     evt.preventDefault();
     if (type === "keyword"){
       removeItem({variables: {keywordId: itemId}})
@@ -26,7 +25,7 @@ class PopupDelete extends Component {
 
   render() {
     const { isOpen } = this.state
-    const {openAction, name, itemId, type} = this.props;
+    const {name, itemId, type} = this.props;
     return(
       <Mutation
         {...(type === 'keyword' && { mutation: DELETE_KEYWORD } )}
@@ -37,15 +36,24 @@ class PopupDelete extends Component {
             open={isOpen}
             size='small'
             trigger={
-              openAction === 'hover' ?
-              <TableCell selectable>{name}</TableCell>: <Icon name="delete"/>}
-            flowing on={openAction} onOpen={this.handleOpen}>
+              type === 'category' ?
+              <TableCell selectable>
+                <div className="selected">
+                  {name}
+                  <Icon name="delete" className="remove-cat" />
+                </div>
+              </TableCell>: <Icon name="delete"/>}
+            flowing on="click" onOpen={this.handleOpen}>
             <Grid centered divided columns='equal'>
               <Grid.Column textAlign='center'>
-                <Button onClick={this.handleClose}>Cancel</Button>
+                <Button className="popup-button" onClick={this.handleClose}>Cancel</Button>
               </Grid.Column>
               <Grid.Column textAlign='center'>
-                <Button onClick={evt => this.handleDeleteItem(evt, type, removeItem, itemId)}>Delete</Button>
+                <Button
+                  className="popup-button"
+                  onClick={evt =>
+                  this.handleDeleteItem(evt, type, removeItem, itemId)}
+                  >Delete</Button>
               </Grid.Column>
             </Grid>
         </Popup>

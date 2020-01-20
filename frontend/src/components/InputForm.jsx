@@ -4,11 +4,11 @@ import { Button, Form, Modal } from 'semantic-ui-react';
 const InputForm = ({
   type, description,
   value, handleValueChange,
-  handleValueSubmit, handleClose}) => {
+  handleValueSubmit}) => {
 
   const [openModal, setOpenModal] = useState(false);
 
-  const handleOpen = ( ) => {
+  const handleOpen = () => {
     setOpenModal(true)
   }
 
@@ -18,10 +18,13 @@ const InputForm = ({
     setOpenModal(false)
   }
 
+  const handleClose = () => {
+    setOpenModal(false)
+  }
 
   return (
     <Modal
-      trigger={<Button primary icon="add"
+      trigger={<Button primary icon="add" className={`${type}`}
       {...(type === 'category' && { content: `Add ${type}` } )}
       onClick={handleOpen}/>}
       open={openModal}
@@ -36,7 +39,10 @@ const InputForm = ({
             value={value}
             label={description}
             onChange={handleValueChange}/>
-            <Form.Button content="Submit" onClick={evt => handleSubmit(evt)}/>
+            <Form.Button
+              content="Submit"
+              onClick={evt => handleSubmit(evt)}
+              primary disabled={value.length < 2}/>
           </Form>
         </Modal.Description>
       </Modal.Content>

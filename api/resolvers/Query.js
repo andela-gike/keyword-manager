@@ -26,12 +26,6 @@ async function fillKeywords(parent, args) {
   const response = await fetch(`${baseURL}${categoryName}&max=10`)
   let data = await response.json()
   return data.map(datam => datam.word)
-  // return data.map((datum, index) => {
-  //   console.log(datum)
-  //   return {
-  //     name: datum.word
-  //   }
-  // })
 }
 
 

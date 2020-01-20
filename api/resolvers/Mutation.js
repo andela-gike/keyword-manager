@@ -1,11 +1,20 @@
+const Query = require('./Query');
+
 async function postCategory (parent, args, context) {
+const prefilledKey = await Query.fillKeywords(parent, {categoryName: args.name})
   return await context.prisma.createCategory({
-    name: args.name
+    name: args.name,
+    keywords: {
+      create: prefilledKey.map(eachWord => {
+        return {
+          name: eachWord
+        }
+      })
+    }
   })
 }
 
 async function removeCategory (parent, args, context) {
-  console.log(args)
   return await context.prisma.deleteCategory({
     id: args.categoryId
   })
@@ -21,7 +30,6 @@ async function postKeyword (parent, args, context) {
 }
 
 async function removeKeyword (parent, args, context) {
-  console.log(args, 'here')
   return await context.prisma.deleteKeyword({
     id: args.keywordId
   })

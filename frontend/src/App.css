@@ -48,3 +48,34 @@
 .ui.top.popup {
   margin: 0;
 }
+
+.ui.button.keyword {
+  height: 30px;
+  width: 30px;
+  margin-left: 30px;
+  padding: 0;
+}
+
+.ui.popup>.ui.grid:not(.padded) {
+  margin: -1rem;
+}
+
+.ui.button.popup-button {
+  padding: .5em
+}
+
+.selected i.icon.remove-cat {
+  display: none
+
+}
+
+.selected:hover i.icon.remove-cat {
+  display: inline-block
+}
+
+.selected {
+  display: flex;
+  justify-content: space-between;
+}
+
+

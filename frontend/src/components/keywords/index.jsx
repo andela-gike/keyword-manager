@@ -13,10 +13,10 @@ class Keyword extends Component {
   }
 
   handleSubmitNewKeyWord = (evt, postKeyword, categoryId) => {
-    console.log(categoryId)
     const {newKeyword} = this.state;
     evt.preventDefault();
     postKeyword({variables: {keywordName: newKeyword, categoryId}})
+    this.setState({ newKeyword : ''})
   }
 
   render() {

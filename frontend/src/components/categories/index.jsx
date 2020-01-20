@@ -16,10 +16,7 @@ class Category extends Component {
     const {newCategory} = this.state;
     evt.preventDefault();
     postCategory({variables: {categoryName: newCategory}})
-  }
-
-  handleCloseModal = () => {
-
+    this.setState({ newCategory : ''})
   }
 
   render() {
@@ -36,7 +33,6 @@ class Category extends Component {
             value={newCategory}
             handleValueChange={this.handleAddNewCategory}
             handleValueSubmit={evt => this.handleSubmitNewCategory(evt, postCategory)}
-            handleClose={this.handleCloseModal}
             />
           ))}
         </Mutation>

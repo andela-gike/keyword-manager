@@ -9,9 +9,13 @@ import DeleteAction from '../DeleteAction'
 const DisplayTable = () => {
   return (
     <Fragment>
-      <Query query={GET_CATEGORIES}>
+      <Query
+       query={GET_CATEGORIES}
+       variables={{
+        offset: 0,
+        limit: 10
+      }} fetchPolicy="cache-and-network">
       {({ loading, error, data }) => {
-        console.log(data)
         if (loading) return 'Loading...';
         if (error) return `Error! ${error.message}`;
         return (
@@ -26,12 +30,12 @@ const DisplayTable = () => {
               {data.categories.map((cat, index) => (
                 <Table.Row key={index}>
                     <DeleteAction type="category"
-                    name={cat.name} openAction="hover"
+                    name={cat.name}
                     itemId={cat.id}/>
                   <Table.Cell>{cat.keywords.map((eachKey, index) =>
                   (<Label key={index}>
                     {eachKey.name}
-                    <DeleteAction type="keyword" name={eachKey.name} openAction="click"
+                    <DeleteAction type="keyword" name={eachKey.name}
                     itemId={eachKey.id}/>
                   </Label>)
                   )}

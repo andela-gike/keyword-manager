@@ -39,8 +39,8 @@ export const DELETE_KEYWORD = gql`
 `;
 
 export const GET_CATEGORIES = gql`
-  query {
-    categories {
+  query Categories($offset: Int, $limit: Int) {
+    categories(skip: $offset, first: $limit) {
       id
       name
       keywords {
