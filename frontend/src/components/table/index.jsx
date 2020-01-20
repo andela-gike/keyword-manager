@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { Table, Label } from 'semantic-ui-react';
+import { Table, Label, Button } from 'semantic-ui-react';
 import { Query } from 'react-apollo';
 import CategoryModal from '../categories';
 import KeywordModal from '../keywords';
@@ -13,9 +13,9 @@ const DisplayTable = () => {
        query={GET_CATEGORIES}
        variables={{
         offset: 0,
-        limit: 10
+        limit: 5
       }} fetchPolicy="cache-and-network">
-      {({ loading, error, data }) => {
+      {({ loading, error, data, fetchMore }) => {
         if (loading) return 'Loading...';
         if (error) return `Error! ${error.message}`;
         return (
@@ -48,7 +48,22 @@ const DisplayTable = () => {
               <Table.Row>
                 <Table.HeaderCell colSpan='3'>
                   <CategoryModal />
+                  <Button onClick={() =>
+                      fetchMore({
+                        variables: {
+                          offset: data.categories.length,
+                        },
+                        updateQuery: (prev, { fetchMoreResult, ...rest }) => {
+                          if (!fetchMoreResult) return prev;
+                          return Object.assign({}, prev, {
+                            categories: [...prev.categories, ...fetchMoreResult.categories]
+                          });
+                        },
+                      })} primary floated="right">
+                    Load More
+                  </Button>
                 </Table.HeaderCell>
+                <Table.HeaderCell></Table.HeaderCell>
               </Table.Row>
             </Table.Footer>
           </Table>
