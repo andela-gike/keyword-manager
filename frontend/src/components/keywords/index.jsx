@@ -1,5 +1,6 @@
 import React, {Component, Fragment} from 'react';
 import { Mutation } from 'react-apollo';
+import { string } from 'prop-types';
 import InputModal from '../InputForm';
 import { POST_KEYWORD, GET_CATEGORIES } from '../../queries'
 
@@ -41,5 +42,9 @@ class Keyword extends Component {
     )
   }
 };
+
+Keyword.propTypes  = {
+  categoryId : string
+}
 
 export default Keyword;

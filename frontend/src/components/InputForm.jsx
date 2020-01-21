@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import { Button, Form, Modal } from 'semantic-ui-react';
+import { string, func } from 'prop-types';
 
 const InputForm = ({
   type, description,
@@ -50,4 +51,11 @@ const InputForm = ({
   )
 }
 
+InputForm.propTypes = {
+  type: string,
+  description: string,
+  value: string,
+  handleValueChange: func,
+  handleValueSubmit: func
+}
 export default InputForm;
